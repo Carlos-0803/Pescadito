@@ -42,4 +42,21 @@ public class CombinadoController {
         return ResponseEntity.ok(combinadoService.crearCombinado(combinado));
 
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<Combinado> actualizarCombinado(@PathVariable Long id, @RequestBody Combinado combinado) {
+        if (combinadoService.findById(id).isPresent()) {
+            return ResponseEntity.ok(combinadoService.actualizarCombinado(id, combinado));
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminarCombinado(@PathVariable Long id) {
+        if (combinadoService.findById(id).isPresent()) {
+            combinadoService.deleteById(id);
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
 }
